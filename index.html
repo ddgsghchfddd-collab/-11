@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공포의 방 - Horror Room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #2d2d2d;
+            border: 3px solid #666;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+        }
+
+        #ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            z-index: 10;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .ui-item {
+            margin: 5px 0;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00ff00;
+            font-size: 12px;
+            text-align: center;
+            z-index: 10;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            text-align: center;
+        }
+
+        #gameOverScreen.show {
+            display: flex;
+        }
+
+        #gameOverScreen h1 {
+            color: #ff0000;
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #ff0000;
+        }
+
+        #gameOverScreen p {
+            color: #00ff00;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #gameOverScreen button {
+            padding: 10px 30px;
+            font-size: 18px;
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #gameOverScreen button:hover {
+            background-color: #00cc00;
+        }
+
+        #winScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #001a4d, #003366);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            text-align: center;
+        }
+
+        #winScreen.show {
+            display: flex;
+        }
+
+        #winScreen h1 {
+            color: #ffff00;
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #ffff00;
+        }
+
+        #winScreen p {
+            color: #00ff00;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #winScreen button {
+            padding: 10px 30px;
+            font-size: 18px;
+            background-color: #ffff00;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #winScreen button:hover {
+            background-color: #cccc00;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="ui">
+            <div class="ui-item">체력: <span id="health">100</span>/100</div>
+            <div class="ui-item">열쇠: <span id="keys">0</span>/1</div>
+            <div class="ui-item">위치: <span id="position">0, 0</span></div>
+            <div class="ui-item">상태: <span id="status">준비 중...</span></div>
+        </div>
+
+        <div id="controls">
+            WASD: 이동 | ESC: 게임 종료
+        </div>
+
+        <div id="gameOverScreen">
+            <h1>GAME OVER</h1>
+            <p id="gameOverMsg">귀신에게 잡혔습니다!</p>
+            <button onclick="location.reload()">다시 시작</button>
+        </div>
+
+        <div id="winScreen">
+            <h1>ESCAPE!</h1>
+            <p>당신은 탈출했습니다!</p>
+            <button onclick="location.reload()">다시 시작</button>
+        </div>
+    </div>
+
+    <script src="audio-manager.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
